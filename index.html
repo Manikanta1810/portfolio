@@ -14,6 +14,7 @@
         }
 
         :root {
+            /* Core Gradients (for accents, buttons, text highlights) */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Blue-Purple */
             --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); /* Pink-Red */
             --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Cyan-Blue */
@@ -21,36 +22,39 @@
             --orange-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); /* Peach-Orange */
             --green-gradient: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); /* Light Green */
             
-            /* NEW: Mixed Light & Dark Backgrounds */
-            --dark-bg-1: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%); /* Deep dark blue */
-            --dark-bg-2: linear-gradient(135deg, #1a1a2e 0%, #0d1520 100%); /* Slightly lighter dark */
-            --light-bg-1: linear-gradient(135deg, #e0f2f7 0%, #b2ebf2 100%); /* Very light blue-green */
-            --light-bg-2: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* Very light pink */
+            /* Backgrounds - Only Light */
+            --bg-main: #f8f8f8; /* Main almost white background */
+            --bg-secondary: #eef5f9; /* Slightly darker light background for alternating sections */
 
-            --card-bg: rgba(255, 255, 255, 0.05); /* Semi-transparent white for cards */
-            --text-primary: #ffffff; /* White */
-            --text-secondary: #b8b8b8; /* Light gray */
-            --text-accent: #4facfe; /* Accent blue */
-            --header-bg: rgba(12, 12, 12, 0.95); /* Semi-transparent dark for header */
-            --shadow-light: rgba(0, 0, 0, 0.3);
-            --shadow-strong: rgba(0, 0, 0, 0.5);
+            /* Text Colors for Light Theme */
+            --text-dark: #2d3748; /* Primary text on light backgrounds */
+            --text-secondary-dark: #718096; /* Secondary text on light backgrounds */
 
-            /* Text colors for light backgrounds */
-            --text-dark: #212121;
+            /* Card & Header Colors for Light Theme */
+            --card-bg-light: rgba(0, 0, 0, 0.03); /* Semi-transparent black for cards on light */
+            --header-bg: rgba(255, 255, 255, 0.95); /* Light header */
+
+            /* Shadows */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(0, 0, 0, 0.25);
+            --shadow-accent-light: rgba(79, 172, 254, 0.2);
+            --shadow-accent-strong: rgba(0, 242, 254, 0.5);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--dark-bg-1); /* Initial dark background */
+            color: var(--text-dark); /* Default text color (for light backgrounds) */
+            background-color: var(--bg-main); /* Initial body background */
             min-height: 100vh;
             overflow-x: hidden; /* Prevent horizontal scroll due to animations */
             perspective: 1000px; /* Enable 3D transformations */
-            transition: background 1s ease; /* Smooth transition for dynamic background */
+            transition: background-color 1s ease, color 1s ease; /* Smooth transition for dynamic background/text */
+            /* Always start as light-theme */
+            color: var(--text-dark);
         }
 
-        /* Animated background particles */
+        /* Animated background particles - adjusted for light background */
         .particles {
             position: fixed;
             top: 0;
@@ -65,10 +69,10 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: var(--accent-gradient);
+            background: var(--accent-gradient); /* Particles retain color */
             border-radius: 50%;
             animation: float 20s infinite linear;
-            opacity: 0.6;
+            opacity: 0.4; /* Slightly less opaque on light bg */
         }
 
         @keyframes float {
@@ -77,10 +81,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.4;
             }
             90% {
-                opacity: 1;
+                opacity: 0.4;
             }
             100% {
                 transform: translateY(-100vh) rotate(360deg);
@@ -103,8 +107,10 @@
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Light border */
         }
+        /* Header style remains consistent */
+
 
         nav {
             display: flex;
@@ -136,7 +142,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-secondary);
+            color: var(--text-dark); /* Nav links on light header */
             font-weight: 500;
             transition: all 0.3s ease, transform 0.3s ease;
             position: relative;
@@ -145,8 +151,8 @@
         }
 
         .nav-links a:hover {
-            color: var(--text-primary);
-            background: var(--card-bg);
+            color: var(--text-dark);
+            background: rgba(0, 0, 0, 0.05); /* Subtle hover background */
             transform: translateY(-3px); /* Lift effect */
         }
 
@@ -175,8 +181,9 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            background: var(--dark-bg-1); /* Specific dark background for hero */
-            color: var(--text-primary); /* Ensure text is visible on dark hero */
+            background-color: var(--bg-main); /* Hero is always main light background */
+            color: var(--text-dark); /* Text for light hero */
+            transition: background-color 1s ease, color 1s ease;
         }
 
         /* Hero section radial gradients for subtle glow */
@@ -187,8 +194,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 40%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -209,7 +216,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 800;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.15); /* Lighter shadow for light background */
         }
 
         .hero .subtitle {
@@ -250,7 +257,7 @@
         .hero .description {
             font-size: 1.2rem;
             margin-bottom: 3rem;
-            color: var(--text-secondary);
+            color: var(--text-secondary-dark); /* Dark secondary text for light hero */
             animation: fadeInUp 1s ease 0.4s both;
             line-height: 1.8;
         }
@@ -302,7 +309,7 @@
         .btn-primary {
             background: var(--primary-gradient);
             color: white;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 25px var(--shadow-accent-light);
         }
 
         .btn-primary:hover {
@@ -311,7 +318,7 @@
         }
 
         .btn-secondary {
-            background: var(--card-bg);
+            background: var(--card-bg-light); /* Light card background for light sections */
             color: var(--text-accent);
             border: 2px solid var(--text-accent);
             backdrop-filter: blur(10px);
@@ -321,51 +328,37 @@
             background: var(--accent-gradient);
             color: white;
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 15px 35px var(--shadow-accent-light);
         }
 
         .section {
             padding: 100px 0;
             position: relative;
-            /* Will be dynamically set by JS to mix light and dark backgrounds */
-            transition: background 0.5s ease;
+            transition: background-color 0.8s ease; /* Smooth background transition */
+            background-color: var(--bg-main); /* Default for sections */
+            color: var(--text-dark); /* Default text for sections */
+        }
+        /* Alternating section background for subtle variation */
+        .section:nth-child(even) {
+            background-color: var(--bg-secondary);
         }
 
-        /* Adjusting text color for sections with light backgrounds */
-        .section.light-bg .section-title,
-        .section.light-bg .project-title,
-        .section.light-bg .skill-category h3,
-        .section.light-bg .experience-title,
-        .section.light-bg .experience-company,
-        .section.light-bg .education-item h3 {
-            -webkit-text-fill-color: var(--text-dark); /* Ensure text is dark on light backgrounds */
-            background-clip: unset; /* Remove background-clip for solid text color */
+        /* Card styles for light background */
+        .skill-category,
+        .project-card,
+        .experience-content,
+        .education-section {
+            background: var(--card-bg-light);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px var(--shadow-light);
         }
-
-        .section.light-bg .hero .description, /* Specific for hero section description */
-        .section.light-bg .description,
-        .section.light-bg .project-description,
-        .section.light-bg .experience-description,
-        .section.light-bg .education-details,
-        .section.light-bg .education-coursework {
-            color: var(--text-dark); /* Dark text for paragraphs on light backgrounds */
+        .skill-category:hover,
+        .project-card:hover,
+        .experience-content:hover,
+        .education-section:hover {
+            background: rgba(0, 0, 0, 0.08); /* Slightly darker on hover */
+            border-color: var(--text-accent);
         }
-
-        .section.light-bg .skill-tag,
-        .section.light-bg .tech-tag,
-        .section.light-bg .project-link,
-        .section.light-bg .contact-link {
-            color: var(--text-dark); /* Dark text for tags and links on light backgrounds */
-            background: rgba(0, 0, 0, 0.1); /* Subtle dark background for elements */
-        }
-
-        .section.light-bg .skill-tag:hover,
-        .section.light-bg .tech-tag:hover,
-        .section.light-bg .project-link:hover,
-        .section.light-bg .contact-link:hover {
-            color: white; /* White text on hover for gradient effect */
-        }
-
 
         .section-title {
             text-align: center;
@@ -373,10 +366,8 @@
             margin-bottom: 4rem;
             font-weight: 700;
             position: relative;
-            background: var(--text-primary); /* Default for titles, overwritten for light sections */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark color for titles */
+            text-shadow: none; /* Remove text shadow */
         }
 
         .section-title::after {
@@ -399,16 +390,13 @@
         }
 
         .skill-category {
-            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 20px;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s ease, transform 0.5s ease;
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d; /* Enable 3D for children */
-            box-shadow: 0 10px 30px var(--shadow-light);
         }
 
         /* Top border animation */
@@ -431,22 +419,18 @@
 
         .skill-category:hover {
             transform: translateY(-15px) rotateX(5deg) rotateY(-5deg); /* 3D tilt + lift */
-            box-shadow: 0 25px 50px var(--shadow-strong), 0 0 40px rgba(79, 172, 254, 0.6); /* Stronger shadow + glow */
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--text-accent);
+            box-shadow: 0 25px 50px var(--shadow-strong), 0 0 40px var(--shadow-accent-strong); /* Stronger shadow + glow */
         }
 
         .skill-category h3 {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark text */
             margin-bottom: 1.5rem;
             font-size: 1.4rem;
             font-weight: 600;
             transform: translateZ(20px); /* Push text forward in 3D */
             transition: transform 0.3s ease;
         }
+
 
         .skill-tags {
             display: flex;
@@ -457,8 +441,8 @@
         }
 
         .skill-tag {
-            background: var(--primary-gradient);
-            color: white;
+            background: rgba(0,0,0,0.1); /* Darker tags on light bg */
+            color: var(--text-dark);
             padding: 8px 16px;
             border-radius: 25px;
             font-size: 0.9rem;
@@ -469,21 +453,16 @@
 
         .skill-tag:hover {
             transform: translateY(-3px) scale(1.1); /* Pop out effect */
+            /* Use accent gradient on hover */
+            background: var(--primary-gradient);
+            color: white;
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
         }
-
-        /* Specific tag colors for visual variety */
-        .skill-category:nth-child(2) .skill-tag { background: var(--secondary-gradient); }
-        .skill-category:nth-child(2) .skill-tag:hover { box-shadow: 0 8px 20px rgba(240, 147, 251, 0.5); }
-
-        .skill-category:nth-child(3) .skill-tag { background: var(--accent-gradient); }
-        .skill-category:nth-child(3) .skill-tag:hover { box-shadow: 0 8px 20px rgba(79, 172, 254, 0.5); }
-
-        .skill-category:nth-child(4) .skill-tag {
-            background: var(--purple-gradient);
-            color: var(--text-dark); /* Darker text for light background */
-        }
-        .skill-category:nth-child(4) .skill-tag:hover { box-shadow: 0 8px 20px rgba(168, 237, 234, 0.5); }
+        /* Specific tag colors for visual variety on hover */
+        .skill-category:nth-child(2) .skill-tag:hover { background: var(--secondary-gradient); box-shadow: 0 8px 20px rgba(240, 147, 251, 0.5); }
+        .skill-category:nth-child(3) .skill-tag:hover { background: var(--accent-gradient); box-shadow: 0 8px 20px rgba(79, 172, 254, 0.5); }
+        .skill-category:nth-child(4) .skill-tag:hover { background: var(--purple-gradient); box-shadow: 0 8px 20px rgba(168, 237, 234, 0.5); }
+        .skill-category:nth-child(4) .skill-tag:hover { color: var(--text-dark); } /* Keep dark text for light purple gradient */
 
 
         .projects-grid {
@@ -494,15 +473,12 @@
         }
 
         .project-card {
-            background: var(--card-bg);
             border-radius: 20px;
             overflow: hidden;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s ease, transform 0.5s ease;
             position: relative;
             transform-style: preserve-3d; /* Enable 3D for children */
-            box-shadow: 0 10px 30px var(--shadow-light);
         }
 
         /* Internal glow on hover */
@@ -513,10 +489,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            background: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.03), transparent); /* Lighter internal glow */
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
 
         .project-card:hover::before {
             opacity: 1;
@@ -524,7 +501,7 @@
 
         .project-card:hover {
             transform: translateY(-20px) rotateX(8deg) rotateY(8deg); /* More pronounced 3D tilt + lift */
-            box-shadow: 0 30px 60px var(--shadow-strong), 0 0 50px rgba(0, 242, 254, 0.7); /* Stronger shadow + vibrant glow */
+            box-shadow: 0 30px 60px var(--shadow-strong), 0 0 50px var(--shadow-accent-strong); /* Stronger shadow + vibrant glow */
         }
 
         .project-image {
@@ -557,17 +534,14 @@
         }
 
         .project-title {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark text */
             font-size: 1.4rem;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .project-description {
-            color: var(--text-secondary);
+            color: var(--text-secondary-dark); /* For light backgrounds */
             margin-bottom: 1.5rem;
             line-height: 1.7;
         }
@@ -580,12 +554,12 @@
         }
 
         .tech-tag {
-            background: rgba(79, 172, 254, 0.1);
-            color: var(--text-accent);
+            background: rgba(0,0,0,0.08); /* Darker tag on light bg */
+            color: var(--text-dark);
             padding: 6px 12px;
             border-radius: 15px;
             font-size: 0.8rem;
-            border: 1px solid rgba(79, 172, 254, 0.3);
+            border: 1px solid rgba(0,0,0,0.15);
             transition: all 0.3s ease;
         }
 
@@ -595,6 +569,7 @@
             transform: translateY(-3px); /* Lift on hover */
             box-shadow: 0 5px 15px rgba(79, 172, 254, 0.5);
         }
+
 
         .project-links {
             display: flex;
@@ -608,7 +583,7 @@
             transition: all 0.3s ease;
             padding: 8px 16px;
             border-radius: 20px;
-            background: rgba(79, 172, 254, 0.1);
+            background: rgba(0,0,0,0.1); /* Darker background for link */
             position: relative;
             overflow: hidden;
         }
@@ -663,20 +638,17 @@
         }
 
         .experience-content {
-            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 20px;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             margin: 0 2rem;
             position: relative;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px var(--shadow-light);
         }
 
         .experience-content:hover {
             transform: translateY(-8px); /* Lift on hover */
-            box-shadow: 0 20px 40px var(--shadow-strong), 0 0 30px rgba(79, 172, 254, 0.4); /* Glow effect */
+            box-shadow: 0 20px 40px var(--shadow-strong), 0 0 30px var(--shadow-accent-light); /* Glow effect */
         }
 
         .experience-item:nth-child(odd) .experience-content {
@@ -697,10 +669,14 @@
             width: 24px;
             height: 24px;
             background: var(--accent-gradient);
-            border: 4px solid #0c0c0c; /* Dark border to contrast with dot */
+            border: 4px solid var(--bg-main); /* Border color matching main background */
             border-radius: 50%;
             z-index: 1;
             transition: all 0.3s ease;
+        }
+        /* Adjust dot border color for alternating section background */
+        .section:nth-child(even) .experience-dot {
+            border-color: var(--bg-secondary);
         }
 
         .experience-item:hover .experience-dot {
@@ -710,10 +686,7 @@
         }
 
         .experience-title {
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark text */
             font-size: 1.4rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
@@ -722,7 +695,7 @@
         .experience-company {
             font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--text-primary);
+            color: var(--text-dark); /* For light backgrounds */
         }
 
         .experience-period {
@@ -733,31 +706,33 @@
         }
 
         .experience-description {
-            color: var(--text-secondary);
+            color: var(--text-secondary-dark); /* For light backgrounds */
             line-height: 1.7;
         }
 
         .experience-tech {
             margin-top: 1.5rem;
             font-size: 0.9rem;
-            color: var(--text-accent);
+            color: var(--text-dark); /* Dark text for tech tags */
             font-style: italic;
             padding: 1rem;
-            background: rgba(79, 172, 254, 0.1);
+            background: rgba(0,0,0,0.08); /* Light tech tag background */
             border-radius: 10px;
-            border-left: 4px solid var(--text-accent);
+            border-left: 4px solid var(--text-dark); /* Dark border for tech tags */
         }
 
+
         .contact {
-            background: var(--dark-bg-1); /* Specific dark background for contact */
-            color: var(--text-primary);
+            background-color: var(--bg-secondary); /* Use a light secondary background for contact */
+            color: var(--text-dark); /* Dark text for contact section */
             text-align: center;
             position: relative;
             overflow: hidden;
             padding: 100px 0; /* Ensure consistent padding */
+            transition: background-color 0.8s ease, color 0.8s ease;
         }
 
-        /* Contact section radial gradient ripple */
+        /* Contact section radial gradient ripple - adjusted opacity for light bg */
         .contact::before {
             content: '';
             position: absolute;
@@ -765,7 +740,7 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: radial-gradient(circle, rgba(79, 172, 254, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.08) 0%, transparent 70%); /* Lighter opacity */
             border-radius: 50%;
             transform: translate(-50%, -50%);
             animation: contactRipple 15s infinite ease-out;
@@ -777,7 +752,7 @@
             0% {
                 width: 0;
                 height: 0;
-                opacity: 0.5;
+                opacity: 0.3; /* Slightly less opaque */
             }
             100% {
                 width: 150%;
@@ -802,7 +777,7 @@
         }
 
         .contact-link {
-            color: var(--text-primary);
+            color: var(--text-dark); /* Dark text for contact links */
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 600;
@@ -810,7 +785,7 @@
             padding: 15px 25px;
             border: 2px solid transparent;
             border-radius: 50px;
-            background: var(--card-bg);
+            background: var(--card-bg-light); /* Light background for links */
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
@@ -835,20 +810,17 @@
         }
 
         .contact-link:hover {
-            color: white;
+            color: white; /* White text on hover for gradient */
             transform: translateY(-5px) scale(1.05); /* Lift and slight scale */
-            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4); /* Glow on hover */
+            box-shadow: 0 15px 35px var(--shadow-accent-light); /* Glow on hover */
         }
 
         .education-section {
-            background: var(--card-bg);
             padding: 2.5rem;
             border-radius: 20px;
             margin-bottom: 2rem;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px var(--shadow-light);
         }
 
         .education-section:hover {
@@ -857,31 +829,25 @@
         }
 
         .education-item h3 {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark text */
             font-size: 1.3rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
 
         .education-details {
-            color: var(--text-secondary);
+            color: var(--text-secondary-dark);
             margin-bottom: 0.5rem;
         }
 
         .education-coursework {
-            color: var(--text-secondary);
+            color: var(--text-secondary-dark);
             font-size: 0.9rem;
             line-height: 1.6;
         }
 
         .gpa {
-            background: var(--secondary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark); /* Solid dark text */
             font-weight: 600;
         }
 
@@ -1017,7 +983,7 @@
     </header>
 
     <main>
-        <section id="home" class="hero">
+        <section id="home" class="hero section">
             <div class="container">
                 <div class="hero-content">
                     <h1>Manikanta Nadendla</h1>
@@ -1224,10 +1190,10 @@
             </div>
         </section>
 
-        <section id="contact" class="contact">
+        <section id="contact" class="contact section"> <!-- Contact is now a section to be included in alternating backgrounds -->
             <div class="container">
                 <div class="contact-content">
-                    <h2 class="section-title" style="color: var(--text-primary);">Let's Work Together</h2>
+                    <h2 class="section-title">Let's Work Together</h2>
                     <p class="description">I'm actively seeking new opportunities and challenging projects. Let's discuss how I can contribute to your team's success with my Java development expertise.</p>
                     <div class="contact-links">
                         <a href="mailto:nadhenla@gmail.com" class="contact-link">📧 Email</a>
@@ -1255,17 +1221,15 @@
             });
         });
 
-        // Header scroll effect: Changes header background and shadow on scroll
+        // Header scroll effect: Changes header background and shadow. Simplified for light theme.
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(12, 12, 12, 0.98)';
-                header.style.boxShadow = '0 8px 32px var(--shadow-strong)';
-            } else {
-                header.style.background = 'var(--header-bg)';
-                header.style.boxShadow = '0 8px 32px var(--shadow-light)';
-            }
+            // Header is always light-themed
+            header.style.background = 'var(--header-bg)';
+            header.style.boxShadow = '0 8px 32px var(--shadow-light)';
+            header.style.borderBottomColor = 'rgba(0,0,0,0.05)';
         });
+
 
         // Intersection Observer for animations: Fades in elements as they enter viewport
         const observerOptions = {
@@ -1293,37 +1257,12 @@
             observer.observe(el);
         });
 
-        // Dynamic background color change on section scroll: Subtle background shift for the body
+        // Dynamic background color for sections - simplified for light theme
         const sections = document.querySelectorAll('.section');
         const body = document.body;
-        // Define a set of background gradients for different sections to cycle through
-        const sectionBackgrounds = [
-            'var(--dark-bg-1)',
-            'var(--light-bg-1)',
-            'var(--dark-bg-2)',
-            'var(--light-bg-2)'
-        ];
 
-        window.addEventListener('scroll', () => {
-            let currentSectionIndex = 0;
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                // Check if the section's center is within the viewport
-                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-                    currentSectionIndex = index;
-                }
-            });
-            // Apply the background gradient corresponding to the current section
-            body.style.background = sectionBackgrounds[currentSectionIndex % sectionBackgrounds.length];
-
-            // Toggle 'light-bg' class based on the current background
-            const currentBg = sectionBackgrounds[currentSectionIndex % sectionBackgrounds.length];
-            if (currentBg.includes('light-bg')) { // Check if the current background is a light one
-                body.classList.add('light-bg');
-            } else {
-                body.classList.remove('light-bg');
-            }
-        });
+        // No need for complex theme switching, body always has a light theme
+        // The alternating backgrounds for sections are handled by CSS nth-child(even) selector
 
         // Particle system generation
         const particlesContainer = document.getElementById('particles');
