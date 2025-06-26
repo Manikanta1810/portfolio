@@ -22,36 +22,39 @@
             --orange-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); /* Peach-Orange */
             --green-gradient: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); /* Light Green */
             
-            /* Backgrounds - Only Light */
+            /* Backgrounds - Only Light for content */
             --bg-main: #f8f8f8; /* Main almost white background */
             --bg-secondary: #eef5f9; /* Slightly darker light background for alternating sections */
+
+            /* Header Specific Dark Background */
+            --header-bg-dark: rgba(26, 32, 44, 0.95); /* Dark header background */
 
             /* Text Colors for Light Theme */
             --text-dark: #2d3748; /* Primary text on light backgrounds */
             --text-secondary-dark: #718096; /* Secondary text on light backgrounds */
+            --text-light-header: #f8f8f8; /* Light text for header/menu items */
 
             /* Card & Header Colors for Light Theme */
             --card-bg-light: rgba(0, 0, 0, 0.03); /* Semi-transparent black for cards on light */
-            --header-bg: rgba(255, 255, 255, 0.95); /* Light header */
 
             /* Shadows */
             --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-strong: rgba(0, 0, 0, 0.25);
+            --shadow-strong: rgba(0, 0, 0, 0.25); /* Stronger shadow for elements on light bg */
             --shadow-accent-light: rgba(79, 172, 254, 0.2);
             --shadow-accent-strong: rgba(0, 242, 254, 0.5);
+            --shadow-header-dark: rgba(0, 0, 0, 0.4); /* Stronger shadow for dark header */
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: var(--text-dark); /* Default text color (for light backgrounds) */
-            background-color: var(--bg-main); /* Initial body background */
+            background-color: var(--bg-main); /* Initial body background, will be light */
             min-height: 100vh;
             overflow-x: hidden; /* Prevent horizontal scroll due to animations */
             perspective: 1000px; /* Enable 3D transformations */
             transition: background-color 1s ease, color 1s ease; /* Smooth transition for dynamic background/text */
-            /* Always start as light-theme */
-            color: var(--text-dark);
+            
         }
 
         /* Animated background particles - adjusted for light background */
@@ -99,18 +102,16 @@
         }
 
         header {
-            background: var(--header-bg);
+            background: var(--header-bg-dark); /* Dark header background */
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px var(--shadow-light);
+            box-shadow: 0 8px 32px var(--shadow-header-dark); /* Stronger shadow for dark header */
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Light border */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle light border */
         }
-        /* Header style remains consistent */
-
 
         nav {
             display: flex;
@@ -142,7 +143,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark); /* Nav links on light header */
+            color: var(--text-light-header); /* Light text for nav links */
             font-weight: 500;
             transition: all 0.3s ease, transform 0.3s ease;
             position: relative;
@@ -151,8 +152,8 @@
         }
 
         .nav-links a:hover {
-            color: var(--text-dark);
-            background: rgba(0, 0, 0, 0.05); /* Subtle hover background */
+            color: var(--text-light-header); /* Keep light text on hover */
+            background: rgba(255, 255, 255, 0.08); /* Subtle hover background */
             transform: translateY(-3px); /* Lift effect */
         }
 
@@ -1190,7 +1191,7 @@
             </div>
         </section>
 
-        <section id="contact" class="contact section"> <!-- Contact is now a section to be included in alternating backgrounds -->
+        <section id="contact" class="contact section">
             <div class="container">
                 <div class="contact-content">
                     <h2 class="section-title">Let's Work Together</h2>
@@ -1221,13 +1222,13 @@
             });
         });
 
-        // Header scroll effect: Changes header background and shadow. Simplified for light theme.
+        // Header scroll effect: Header remains dark regardless of scroll position
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            // Header is always light-themed
-            header.style.background = 'var(--header-bg)';
-            header.style.boxShadow = '0 8px 32px var(--shadow-light)';
-            header.style.borderBottomColor = 'rgba(0,0,0,0.05)';
+            // Header is always dark-themed, no change on scroll
+            header.style.background = 'var(--header-bg-dark)';
+            header.style.boxShadow = '0 8px 32px var(--shadow-header-dark)';
+            header.style.borderBottomColor = 'rgba(255, 255, 255, 0.08)';
         });
 
 
@@ -1257,12 +1258,8 @@
             observer.observe(el);
         });
 
-        // Dynamic background color for sections - simplified for light theme
-        const sections = document.querySelectorAll('.section');
-        const body = document.body;
-
-        // No need for complex theme switching, body always has a light theme
-        // The alternating backgrounds for sections are handled by CSS nth-child(even) selector
+        // No dynamic background color change for sections in this version
+        // All sections follow the --bg-main or --bg-secondary light colors via CSS.
 
         // Particle system generation
         const particlesContainer = document.getElementById('particles');
